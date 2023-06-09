@@ -1,8 +1,9 @@
 // FlipCard.js
 import React from 'react';
 import './FlipCard.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 
@@ -13,25 +14,28 @@ class FlipCard extends React.Component {
       isLoggedIn: false,
       username: '',
       password: '',
-      loginError: false
+      loginError: false,
     };
   }
 
   handleLogin = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
-
-    // Validate the login credentials here, e.g., by sending a request to a server
-    const isValidCredentials = this.validateCredentials(username, password);
-
+  
+    // Validate the login credentials here
+    const isValidCredentials = this.isValidCredentials(username, password);
+  
     if (isValidCredentials) {
-      // If the login is successful, update the state to reflect the logged-in state
+      // If the login is successful
       this.setState({ isLoggedIn: true, loginError: false });
+      toast.error('Login successfully'); // Display login successful
     } else {
-      // If the login is unsuccessful, display an error message
+      // If the login is unsuccessful
       this.setState({ isLoggedIn: false, loginError: true });
+      toast.error('Invalid username or password'); // Display toast notification
     }
-  }
+  };
+  
 
   handleLogout = () => {
     // Perform any necessary logout actions
@@ -55,14 +59,14 @@ class FlipCard extends React.Component {
     this.setState({ [name]: value });
   }
 
-  validateCredentials = (username, password) => {
+  isValidCredentials = (username, password) => {
     // Perform your validation logic here
     // This is a placeholder implementation that checks for a specific username and password
-    return username === 'bold' && password === 'jungle';
+    return username === 'admin' && password === 'password';
   }
 
   render() {
-    const { isLoggedIn, username, password, loginError,currentPage} = this.state;
+    const { isLoggedIn, username, password,currentPage} = this.state;
 
     if (isLoggedIn) {
         return (
@@ -146,33 +150,35 @@ class FlipCard extends React.Component {
       } else {
         return (
           <div>
+            <div className="form-container">
             <form onSubmit={this.handleLogin}>
-            <div>
+              <div className="form-group">
                 <input
-                    type="text"
-                    name="username"
-                    value={username}
-                    onChange={this.handleInputChange}
-                    placeholder="Username"
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={this.handleInputChange}
+                  placeholder="Username"
                 />
-                </div>
-                <div>
+              </div>
+              <div className="form-group">
                 <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={this.handleInputChange}
-                    placeholder="Password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={this.handleInputChange}
+                  placeholder="Password"
                 />
-                </div>
-                <ToastContainer position="top-right" />
-                <div>
+              </div>
+              <div className="form-group">
                 <button type="submit">Login</button>
-
-            </div>
+              </div>
+              <ToastContainer position="top-right" />
             </form>
+            </div>
           </div>
         );
+        
       }
     }
   }
