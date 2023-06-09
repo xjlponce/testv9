@@ -58,7 +58,7 @@ class FlipCard extends React.Component {
   validateCredentials = (username, password) => {
     // Perform your validation logic here
     // This is a placeholder implementation that checks for a specific username and password
-    return username === 'admin' && password === 'password';
+    return username === 'bold' && password === 'jungle';
   }
 
   render() {
